@@ -1,0 +1,35 @@
+CREATE TABLE Paciente (
+
+cod SERIAL PRIMARY KEY,
+nome VARCHAR(40),
+telefone VARCHAR(40)
+);
+
+
+CREATE TABLE Consulta ( 
+
+cod SERIAL PRIMARY KEY,
+cod_paciente INTEGER REFERENCES Paciente(cod),
+data_consulta DATE,
+hora VARCHAR
+
+);
+
+
+INSERT INTO Paciente(nome, telefone)
+VALUES ('Paulo', '33327374');
+INSERT INTO Paciente(nome, telefone)
+VALUES ('Renata', '33325374');
+INSERT INTO Paciente(nome, telefone)
+VALUES ('Rafael', '33237374');
+
+SELECT * FROM Paciente;
+
+INSERT INTO Consulta (cod_paciente, data_consulta, hora)
+VALUES (1,'2013-05-14', '10:00');
+INSERT INTO Consulta (cod_paciente, data_consulta, hora)
+VALUES (2, '2013-04-12', '11:00');
+INSERT INTO Consulta (cod_paciente, data_consulta, hora)
+VALUES (3, '2013-07-13', '14:00');
+
+SELECT * FROM Consulta;
