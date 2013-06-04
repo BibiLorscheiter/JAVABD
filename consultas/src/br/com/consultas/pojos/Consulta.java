@@ -1,12 +1,19 @@
 package br.com.consultas.pojos; // pojo - plain old java object
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Consulta {
 	private Integer cod;
 	private Integer codPaciente;
 	private Date dataConsulta;
 	private String hora;
+	
+public Consulta (Integer cod, Integer cod_paciente, Date data_consulta, String hora){
+   this.cod = cod;        
+   this.codPaciente = cod_paciente;
+   this.dataConsulta = data_consulta;
+   this.hora = hora;
+}
 	
 	public Integer getCod() {
 		return cod;

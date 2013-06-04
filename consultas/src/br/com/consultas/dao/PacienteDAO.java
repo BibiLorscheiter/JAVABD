@@ -14,7 +14,7 @@ import br.com.consultas.pojos.Paciente;
  * A classe <code>PacienteDAO</code> representa um objecto de acesso a dados (data
  * access object - DAO).
  * 
- * Todas as operações em SQL e JDBC da aplicação são realizadas pelo DAO.
+ * Todas as operaÔøΩ‚Ä∫es em SQL e JDBC da aplicaÔøΩ‚Äπo s‚Äπo realizadas pelo DAO.
  * 
  * @author bibianafonso@gmail.com
  * 
@@ -40,7 +40,7 @@ public class PacienteDAO {
 		try {
 			con = DriverManager.getConnection(
 					"jdbc:postgresql://localhost:5432/consultas", "postgres",
-					"my_password");
+					"junkebox6");
 
 			stmt = con.prepareStatement(selectAll);
 			rs = stmt.executeQuery();
@@ -87,7 +87,7 @@ public class PacienteDAO {
 		try {
 			con = DriverManager.getConnection(
 					"jdbc:postgresql://localhost:5432/consultas", "postgres",
-					"redhat182");
+					"junkebox6");
 
 			stmt = con.prepareStatement(selectPacienteCode);
 			stmt.setInt(1, cod);
@@ -132,7 +132,7 @@ public class PacienteDAO {
 		try {
 			con = DriverManager.getConnection(
 					"jdbc:postgresql://localhost:5432/consultas", "postgres",
-					"redhat182");
+					"junkebox6");
 
 			stmt = con.prepareStatement(insertPaciente);
 			stmt.setString(1, paciente.getNome());
@@ -140,7 +140,7 @@ public class PacienteDAO {
 			int r = stmt.executeUpdate();
 			
 			if (r != 1) {
-				throw new RuntimeException("Erro ao inserir operação");
+				throw new RuntimeException("Erro ao inserir operaÔøΩ‚Äπo");
 			}
 
 		} catch (Exception e) {
@@ -173,13 +173,13 @@ public class PacienteDAO {
 		}
 		System.out.println("Fim - Buscar();");
 		System.out.println("Inicio - Buscar(codigo);");
-		Paciente paciente = pacienteDAO.buscar(2); // retorna apenas pelo codigo
+		Paciente paciente = pacienteDAO.buscar(3); // retorna apenas pelo codigo
 		System.out.println("Nome: " + paciente.getNome() + ", Telefone:" + paciente.getTelefone());
 		System.out.println("Fim - Buscar(codigo);");
 		
 		
 		// Paciente
-		Paciente novoPaciente = new Paciente(null, "Antonio","33342525");
+		Paciente novoPaciente = new Paciente(null, "Natan","33556536");
 		pacienteDAO.inserir(novoPaciente);
 		
 	}
