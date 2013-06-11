@@ -1,5 +1,7 @@
 package br.com.consultas.dao;
 
+import java.io.FileInputStream;
+import java.io.ObjectInputStream.GetField;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -11,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Properties;
 
 import br.com.consultas.pojos.Consulta;
 
@@ -42,9 +45,11 @@ public class ConsultaDAO {
 		ResultSet rs = null;
 		Connection con = null;
 		try {
-			con = DriverManager.getConnection(
-					"jdbc:postgresql://localhost:5432/consultas", "postgres",
-					"junkebox6");
+			Properties properties = new Properties();
+			properties.load(new FileInputStream("properties/consulta.properties"));
+			String url = properties.getProperty("url");
+			
+			con = DriverManager.getConnection(url, properties);
 
 			stmt = con.prepareStatement(selectAll);
 			rs = stmt.executeQuery();
@@ -93,9 +98,11 @@ public class ConsultaDAO {
 		ResultSet rs = null;
 		Connection con = null;
 		try {
-			con = DriverManager.getConnection(
-					"jdbc:postgresql://localhost:5432/consultas", "postgres",
-					"junkebox6");
+			Properties properties = new Properties();
+			properties.load(new FileInputStream("properties/consulta.properties"));
+			String url = properties.getProperty("url");
+			
+			con = DriverManager.getConnection(url, properties);
 
 			stmt = con.prepareStatement(selectConsultaCode);
 			stmt.setInt(1, cod);
@@ -139,9 +146,11 @@ public class ConsultaDAO {
 		ResultSet rs = null;
 		Connection con = null;
 		try {
-			con = DriverManager.getConnection(
-					"jdbc:postgresql://localhost:5432/consultas", "postgres",
-					"junkebox6");
+			Properties properties = new Properties();
+			properties.load(new FileInputStream("properties/consulta.properties"));
+			String url = properties.getProperty("url");
+			
+			con = DriverManager.getConnection(url, properties);
 
 			stmt = con.prepareStatement(insertConsulta);
 			stmt.setInt(1, consulta.getCodPaciente());
@@ -181,18 +190,21 @@ public class ConsultaDAO {
 		System.out.println("Inicio - Buscar();");
 		for(Consulta consulta : consultas){
 			java.util.Date dataConsultaAtual = new java.util.Date(consulta.getDataConsulta().getTime());
-			System.out.println("Codigo Consulta: " + consulta.getCod() + ", Data Consulta:" + consulta.getDataConsulta() + ", Hora:" + dataConsultaAtual.getHours());
+			System.out.println("Codigo Consulta: " + consulta.getCod() + ", Data Consulta:" + consulta.getDataConsulta() + ", Hora:" + consulta.getHora());
 		}
 		System.out.println("Fim - Buscar();");
 		System.out.println("Inicio - Buscar(codigo);");
 		Consulta consulta = consultaDAO.buscar(3); // retorna apenas pelo codigo
 		java.util.Date dataConsultaAtual = new java.util.Date(consulta.getDataConsulta().getTime());
-		System.out.println("Data: " + consulta.getDataConsulta() + ", Hora:" + dataConsultaAtual.getHours());
+		System.out.println("Data: " + consulta.getDataConsulta() + ", Hora:" + consulta.getHora());
 		System.out.println("Fim - Buscar(codigo);");
 
-		String strDate = "2012-12-31 10:00:00"; //insert perguntar professor exibir horas
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		String strDate = "2013-11-22 09:00:00"; //insert perguntar professor exibir horas
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         java.util.Date date = new java.util.Date();
+        
+        StringBuilder hora = new StringBuilder();
+        hora.append(date.getHours()).append(":").append(date.getMinutes());
 		try {
 			date = sdf.parse(strDate);
 		} catch (ParseException e) {
@@ -200,7 +212,7 @@ public class ConsultaDAO {
 			e.printStackTrace();
 		}
 		// Consulta
-		Consulta novaConsulta = new Consulta(1, 2, new Date(date.getTime()), "");
+		Consulta novaConsulta = new Consulta(1, 2, new Date(date.getTime()), hora.toString());
 		consultaDAO.inserir(novaConsulta);
 
 	}

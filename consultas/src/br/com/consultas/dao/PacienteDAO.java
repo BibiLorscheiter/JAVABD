@@ -1,5 +1,6 @@
 package br.com.consultas.dao;
 
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import br.com.consultas.pojos.Paciente;
 
@@ -38,9 +40,11 @@ public class PacienteDAO {
 		ResultSet rs = null;
 		Connection con = null;
 		try {
-			con = DriverManager.getConnection(
-					"jdbc:postgresql://localhost:5432/consultas", "postgres",
-					"junkebox6");
+			Properties properties = new Properties();
+			properties.load(new FileInputStream("properties/consulta.properties"));
+			String url = properties.getProperty("url");
+			
+			con = DriverManager.getConnection(url, properties);
 
 			stmt = con.prepareStatement(selectAll);
 			rs = stmt.executeQuery();
@@ -85,9 +89,11 @@ public class PacienteDAO {
 		ResultSet rs = null;
 		Connection con = null;
 		try {
-			con = DriverManager.getConnection(
-					"jdbc:postgresql://localhost:5432/consultas", "postgres",
-					"junkebox6");
+			Properties properties = new Properties();
+			properties.load(new FileInputStream("properties/consulta.properties"));
+			String url = properties.getProperty("url");
+			
+			con = DriverManager.getConnection(url, properties);
 
 			stmt = con.prepareStatement(selectPacienteCode);
 			stmt.setInt(1, cod);
@@ -130,9 +136,11 @@ public class PacienteDAO {
 		ResultSet rs = null;
 		Connection con = null;
 		try {
-			con = DriverManager.getConnection(
-					"jdbc:postgresql://localhost:5432/consultas", "postgres",
-					"junkebox6");
+			Properties properties = new Properties();
+			properties.load(new FileInputStream("properties/consulta.properties"));
+			String url = properties.getProperty("url");
+			
+			con = DriverManager.getConnection(url, properties);
 
 			stmt = con.prepareStatement(insertPaciente);
 			stmt.setString(1, paciente.getNome());
@@ -179,7 +187,7 @@ public class PacienteDAO {
 		
 		
 		// Paciente
-		Paciente novoPaciente = new Paciente(null, "Natan","33556536");
+		Paciente novoPaciente = new Paciente(null, "Erick","33322332");
 		pacienteDAO.inserir(novoPaciente);
 		
 	}
