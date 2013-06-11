@@ -1,14 +1,15 @@
 package br.com.consultas.pojos; // pojo - plain old java object
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Consulta {
 	private Integer cod;
 	private Integer codPaciente;
 	private Date dataConsulta;
-	private String hora;
+	private Timestamp hora;
 	
-public Consulta (Integer cod, Integer cod_paciente, Date data_consulta, String hora){
+public Consulta (Integer cod, Integer cod_paciente, Date data_consulta, Timestamp hora){
    this.cod = cod;        
    this.codPaciente = cod_paciente;
    this.dataConsulta = data_consulta;
@@ -33,10 +34,10 @@ public Consulta (Integer cod, Integer cod_paciente, Date data_consulta, String h
 	public void setDataConsulta(Date dataConsulta) {
 		this.dataConsulta = dataConsulta;
 	}
-	public String getHora() {
+	public Timestamp getHora() {
 		return hora;
 	}
-	public void setHora(String hora) {
+	public void setHora(Timestamp hora) {
 		this.hora = hora;
 	}
 }
