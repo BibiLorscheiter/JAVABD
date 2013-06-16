@@ -5,13 +5,18 @@ nome VARCHAR(40),
 telefone VARCHAR(40)
 );
 
+ALTER TABLE consulta DROP COLUMN hora;
+
+ALTER TABLE consulta ADD COLUMN hora timestamp with time zone;
+ALTER TABLE consulta ALTER COLUMN hora SET DEFAULT now();
+
 
 CREATE TABLE Consulta ( 
 
 cod SERIAL PRIMARY KEY,
 cod_paciente INTEGER REFERENCES Paciente(cod),
 data_consulta DATE,
-hora VARCHAR
+hora timestamp with time zone DEFAULT now()
 
 );
 
@@ -23,13 +28,13 @@ VALUES ('Renata', '33325374');
 INSERT INTO Paciente(nome, telefone)
 VALUES ('Rafael', '33237374');
 
-SELECT * FROM Paciente;
+select * from paciente
 
 INSERT INTO Consulta (cod_paciente, data_consulta, hora)
-VALUES (1,'2013-05-14', '10:00');
+VALUES (1,'2013-05-14', '2013-05-14 10:00:00');
 INSERT INTO Consulta (cod_paciente, data_consulta, hora)
-VALUES (2, '2013-04-12', '11:00');
+VALUES (2, '2013-04-12', '2013-04-12 11:00:00');
 INSERT INTO Consulta (cod_paciente, data_consulta, hora)
-VALUES (3, '2013-07-13', '14:00');
+VALUES (3, '2013-07-13', '2013-07-13 14:00:00');
 
 SELECT * FROM Consulta;
