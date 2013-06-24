@@ -64,9 +64,14 @@ public class ConsultaDAO {
 			}
 
 
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
+			
 			e.printStackTrace();
-			// FIXME: comunicar erro ao programa cliente
+			
+		} catch (Exception e){
+			e.printStackTrace();
+		
+		
 		} finally {
 			try {
 				if (stmt != null) {
@@ -80,7 +85,7 @@ public class ConsultaDAO {
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
-				// FIXME: comunicar erro ao programa cliente
+
 			}
 		}
 		return consultaLista;
@@ -130,7 +135,9 @@ public class ConsultaDAO {
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
-				// FIXME: comunicar erro ao programa cliente
+			} catch (Exception e){
+				e.printStackTrace();
+				
 			}
 		}
 		return consulta;
@@ -154,7 +161,7 @@ public class ConsultaDAO {
 
 			stmt = con.prepareStatement(insertConsulta);
 			stmt.setInt(1, consulta.getCodPaciente());
-			stmt.setDate(2, consulta.getDataConsulta());
+			stmt.setDate(2, (Date) consulta.getDataConsulta());
 			stmt.setTimestamp(3, consulta.getHora());
 			int r = stmt.executeUpdate();
 
@@ -162,9 +169,12 @@ public class ConsultaDAO {
 				throw new RuntimeException("Erro ao inserir consulta");
 			}
 
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
-			// FIXME: comunicar erro ao programa cliente
+		} catch (Exception e){
+			
+			e.printStackTrace();
+			
 		} finally {
 			try {
 				if (stmt != null) {
@@ -187,19 +197,19 @@ public class ConsultaDAO {
 		ConsultaDAO consultaDAO = new ConsultaDAO();
 		List<Consulta> consultas = consultaDAO.buscar(); // retorna todos
 		System.out.println("Inicio - Buscar();");
-		DateFormat df = new SimpleDateFormat("h:mm a");
+		//DateFormat df = new SimpleDateFormat("h:mm a");
 		for(Consulta consulta : consultas){
 			//java.util.Date dataConsultaAtual = new java.util.Date(consulta.getDataConsulta().getTime());
 			System.out.println("Codigo Consulta: " + consulta.getCod() + ", Data Consulta:" + consulta.getDataConsulta() + ", Hora: " + new SimpleDateFormat("HH:mm").format(consulta.getHora()));//mostra data e hora no formato especificado
 		}
 		System.out.println("Fim - Buscar();");
 		System.out.println("Inicio - Buscar(codigo);");
-		Consulta consulta = consultaDAO.buscar(37); // retorna apenas pelo codigo
+		Consulta consulta = consultaDAO.buscar(44); // retorna apenas pelo codigo
 		//java.util.Date dataConsultaAtual = new java.util.Date(consulta.getDataConsulta().getTime());
 		System.out.println("Data: " + consulta.getDataConsulta() + ", Hora:" + new SimpleDateFormat("HH:mm").format(consulta.getHora()));
 		System.out.println("Fim - Buscar(codigo);");
         
-		String strDate = "2013-12-21 07:30:00"; //insert nova data
+		String strDate = "2013-12-24 09:30:00"; //insert nova data
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = null;
 		Timestamp ts = null;

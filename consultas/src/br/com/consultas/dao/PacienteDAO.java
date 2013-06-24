@@ -172,12 +172,13 @@ public class PacienteDAO {
 		}
 	}
 	
+	
 	public static void main(String[] args) {
 		PacienteDAO pacienteDAO = new PacienteDAO();
 		List<Paciente> pacientes = pacienteDAO.buscar(); // retorna todos
 		System.out.println("Inicio - Buscar();");
 		for(Paciente paciente : pacientes){
-			System.out.println("Nome: " + paciente.getNome() + ", Telefone:" + paciente.getTelefone());
+			System.out.println("Código: " + paciente.getCod() + " Nome: " + paciente.getNome() + ", Telefone:" + paciente.getTelefone());
 		}
 		System.out.println("Fim - Buscar();");
 		System.out.println("Inicio - Buscar(codigo);");

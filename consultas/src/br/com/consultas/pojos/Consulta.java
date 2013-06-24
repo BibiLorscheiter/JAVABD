@@ -1,6 +1,6 @@
 package br.com.consultas.pojos; // pojo - plain old java object
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Timestamp;
 
 public class Consulta {
@@ -14,8 +14,8 @@ public Consulta (Integer cod, Integer cod_paciente, Date data_consulta, Timestam
    this.codPaciente = cod_paciente;
    this.dataConsulta = data_consulta;
    this.hora = hora;
-}
-	
+	}
+
 	public Integer getCod() {
 		return cod;
 	}
