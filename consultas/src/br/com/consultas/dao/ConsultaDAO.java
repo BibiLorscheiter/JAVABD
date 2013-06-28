@@ -18,8 +18,8 @@ import java.util.Properties;
 import br.com.consultas.pojos.Consulta;
 
 /**
- * A classe <code>ConsultaDAO</code> representa um objecto de acesso a dados (data
- * access object - DAO).
+ * A classe <code>ConsultaDAO</code> representa um objecto de acesso a dados
+ * (data access object - DAO).
  * 
  * Todas as opera›es em SQL e JDBC da aplica‹o s‹o realizadas pelo DAO.
  * 
@@ -30,12 +30,18 @@ public class ConsultaDAO {
 
 	private static final String selectAll = "select * from consulta";
 	private static final String selectConsultaCode = "select * from consulta where cod = ?";
-	private static final String insertConsulta = "insert into consulta(cod_paciente, data_consulta, hora) values (?, ?, ?)";
+	private static final String insertConsulta = "insert into consulta(cod_paciente, data_consulta) values (?, ?)";
 
+	/*
+	 * 
+	 * create table consulta( cod SERIAL PRIMARY KEY, cod_paciente INTEGER
+	 * REFERENCES Paciente(cod), data_consulta timestamp with time zone DEFAULT
+	 * now() )
+	 */
 
 	/**
-	 * Metodo responsavel por buscar todos registros da 
-	 * tabela consulta.
+	 * Metodo responsavel por buscar todos registros da tabela consulta.
+	 * 
 	 * @return lista de consultas.
 	 */
 	public List<Consulta> buscar() {
@@ -46,7 +52,8 @@ public class ConsultaDAO {
 		Connection con = null;
 		try {
 			Properties properties = new Properties();
-			properties.load(new FileInputStream("properties/consulta.properties"));
+			properties.load(new FileInputStream(
+					"properties/consulta.properties"));
 			String url = properties.getProperty("url");
 
 			con = DriverManager.getConnection(url, properties);
@@ -56,22 +63,19 @@ public class ConsultaDAO {
 			while (rs.next()) {
 				int cod = rs.getInt("cod");
 				int cod_paciente = rs.getInt("cod_paciente");
-				Date data_consulta = rs.getDate("data_consulta");
-				Timestamp hora = rs.getTimestamp("hora");
+				Timestamp data_consulta = rs.getTimestamp("data_consulta");
 
-				consulta = new Consulta(cod, cod_paciente, data_consulta, hora);
+				consulta = new Consulta(cod, cod_paciente, data_consulta);
 				consultaLista.add(consulta);
 			}
 
-
 		} catch (RuntimeException e) {
-			
+
 			e.printStackTrace();
-			
-		} catch (Exception e){
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		
-		
+
 		} finally {
 			try {
 				if (stmt != null) {
@@ -93,10 +97,12 @@ public class ConsultaDAO {
 
 	/**
 	 * Metodo responsavel por trazer apenas uma consulta por codigo.
-	 * @param cod - id da consulta
+	 * 
+	 * @param cod
+	 *            - id da consulta
 	 * @return
 	 */
-	public Consulta buscar(Integer cod){
+	public Consulta buscar(Integer cod) {
 
 		Consulta consulta = null;
 		PreparedStatement stmt = null;
@@ -104,7 +110,8 @@ public class ConsultaDAO {
 		Connection con = null;
 		try {
 			Properties properties = new Properties();
-			properties.load(new FileInputStream("properties/consulta.properties"));
+			properties.load(new FileInputStream(
+					"properties/consulta.properties"));
 			String url = properties.getProperty("url");
 
 			con = DriverManager.getConnection(url, properties);
@@ -116,8 +123,7 @@ public class ConsultaDAO {
 				int newCode = rs.getInt("cod");
 				int cod_paciente = rs.getInt("cod_paciente");
 				Date data_consulta = rs.getDate("data_consulta");
-				Timestamp hora = rs.getTimestamp("hora");
-				consulta = new Consulta(newCode, cod_paciente, data_consulta, hora);
+				consulta = new Consulta(newCode, cod_paciente, data_consulta);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -135,9 +141,9 @@ public class ConsultaDAO {
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
-			} catch (Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
-				
+
 			}
 		}
 		return consulta;
@@ -145,24 +151,27 @@ public class ConsultaDAO {
 
 	/**
 	 * Metod responsavel por adicionar um paciente consulta.
+	 * 
 	 * @param consulta
 	 */
-	public void inserir(Consulta consulta){
+	public void inserir(Consulta consulta) {
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		Connection con = null;
 		try {
 			Properties properties = new Properties();
-			properties.load(new FileInputStream("properties/consulta.properties"));
+			properties.load(new FileInputStream(
+					"properties/consulta.properties"));
 			String url = properties.getProperty("url");
 
 			con = DriverManager.getConnection(url, properties);
 
 			stmt = con.prepareStatement(insertConsulta);
 			stmt.setInt(1, consulta.getCodPaciente());
-			stmt.setDate(2, (Date) consulta.getDataConsulta());
-			stmt.setTimestamp(3, consulta.getHora());
+			stmt.setTimestamp(2, new Timestamp(consulta.getDataConsulta()
+					.getTime()));
+			// stmt.setTimestamp(3, consulta.getHora());
 			int r = stmt.executeUpdate();
 
 			if (r != 1) {
@@ -171,10 +180,10 @@ public class ConsultaDAO {
 
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-		} catch (Exception e){
-			
+		} catch (Exception e) {
+
 			e.printStackTrace();
-			
+
 		} finally {
 			try {
 				if (stmt != null) {
@@ -197,34 +206,32 @@ public class ConsultaDAO {
 		ConsultaDAO consultaDAO = new ConsultaDAO();
 		List<Consulta> consultas = consultaDAO.buscar(); // retorna todos
 		System.out.println("Inicio - Buscar();");
-		//DateFormat df = new SimpleDateFormat("h:mm a");
-		for(Consulta consulta : consultas){
-			//java.util.Date dataConsultaAtual = new java.util.Date(consulta.getDataConsulta().getTime());
-			System.out.println("Codigo Consulta: " + consulta.getCod() + ", Data Consulta:" + consulta.getDataConsulta() + ", Hora: " + new SimpleDateFormat("HH:mm").format(consulta.getHora()));//mostra data e hora no formato especificado
+		// DateFormat df = new SimpleDateFormat("h:mm a");
+		for (Consulta consulta : consultas) {
+			
 		}
 		System.out.println("Fim - Buscar();");
 		System.out.println("Inicio - Buscar(codigo);");
-		Consulta consulta = consultaDAO.buscar(44); // retorna apenas pelo codigo
-		//java.util.Date dataConsultaAtual = new java.util.Date(consulta.getDataConsulta().getTime());
-		System.out.println("Data: " + consulta.getDataConsulta() + ", Hora:" + new SimpleDateFormat("HH:mm").format(consulta.getHora()));
+		Consulta consulta = consultaDAO.buscar(44); // retorna apenas pelo
+													// codigo
+		
 		System.out.println("Fim - Buscar(codigo);");
-        
-		String strDate = "2013-12-24 09:30:00"; //insert nova data
+
+		String strDate = "2014-11-11 09:30:00"; // insert nova data
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = null;
-		Timestamp ts = null;
+
 		try {
 			date = new Date(sdf.parse(strDate).getTime());
-			ts = new Timestamp( sdf.parse( strDate ).getTime() );
-			String S = new SimpleDateFormat("HH:mm").format(ts);
-			//System.out.println("Hora: " + S);
+
+			// System.out.println("Hora: " + S);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		// Consulta
-		Consulta novaConsulta = new Consulta(1, 2, new Date(date.getTime()), ts);
+		Consulta novaConsulta = new Consulta(1, 2, date);
 		consultaDAO.inserir(novaConsulta);
 
 	}

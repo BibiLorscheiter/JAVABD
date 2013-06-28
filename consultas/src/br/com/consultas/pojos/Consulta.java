@@ -7,13 +7,13 @@ public class Consulta {
 	private Integer cod;
 	private Integer codPaciente;
 	private Date dataConsulta;
-	private Timestamp hora;
 	
-public Consulta (Integer cod, Integer cod_paciente, Date data_consulta, Timestamp hora){
+	
+public Consulta (Integer cod, Integer cod_paciente, Date data_consulta){
    this.cod = cod;        
    this.codPaciente = cod_paciente;
    this.dataConsulta = data_consulta;
-   this.hora = hora;
+   
 	}
 
 	public Integer getCod() {
@@ -31,13 +31,8 @@ public Consulta (Integer cod, Integer cod_paciente, Date data_consulta, Timestam
 	public Date getDataConsulta() {
 		return dataConsulta;
 	}
-	public void setDataConsulta(Date dataConsulta) {
+	public void setDataConsulta(Timestamp dataConsulta) {
 		this.dataConsulta = dataConsulta;
 	}
-	public Timestamp getHora() {
-		return hora;
-	}
-	public void setHora(Timestamp hora) {
-		this.hora = hora;
-	}
+	
 }

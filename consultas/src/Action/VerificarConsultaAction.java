@@ -5,9 +5,13 @@ import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import br.com.consultas.dao.ConsultaDAO;
 import br.com.consultas.dao.PacienteDAO;
@@ -16,21 +20,19 @@ import br.com.consultas.pojos.Paciente;
 
 import swing.ConsultaGUI;
 
-public class ConsultaAction implements ActionListener {
+public class VerificarConsultaAction implements ActionListener {
 
-	private JTextField codigo;
 	private JTextField data;
-
-	public ConsultaAction(JTextField codigo, JTextField data) {
-		this.codigo = codigo;
+	private JTable table;
+     //action do botão de verificar consultas já cadastradas
+	public VerificarConsultaAction(JTextField data, JTable table) {
 		this.data = data;
+		this.table=table;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		int c = Integer.parseInt(codigo.getText());
 		ConsultaDAO p = new ConsultaDAO();
-		
 		
 		
 		String strDate = data.getText(); // insert nova data
@@ -43,13 +45,18 @@ public class ConsultaAction implements ActionListener {
 			e.printStackTrace();
 		}
 
-
-
-		Consulta novaConsulta = new Consulta(1, c, date);
-
-        p.inserir(novaConsulta);
+		List<Consulta> consultas = p.buscar();
+		
+		DefaultTableModel model = (DefaultTableModel) table.getModel() ; 
+		for (Consulta consulta : consultas) {
+			model.addRow(new Object[] {consulta.getCodPaciente(), sdf.format(consulta.getDataConsulta())});
+		}
+		
+		
+		
+		//JScrollPane pane = new JScrollPane(model);
         
-        JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
+        JOptionPane.showMessageDialog(null, "Consultado com sucesso!");
 		
 	}
 }
