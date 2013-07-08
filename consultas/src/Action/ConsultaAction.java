@@ -1,11 +1,12 @@
 package Action;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -16,7 +17,8 @@ import br.com.consultas.pojos.Paciente;
 
 import swing.ConsultaGUI;
 
-public class ConsultaAction implements ActionListener {
+@SuppressWarnings({ "unused", "serial" })
+public class ConsultaAction extends AbstractAction {
 
 	private JTextField codigo;
 	private JTextField data;

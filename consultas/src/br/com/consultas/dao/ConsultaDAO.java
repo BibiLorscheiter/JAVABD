@@ -2,7 +2,7 @@ package br.com.consultas.dao;
 
 import java.io.FileInputStream;
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,25 +26,23 @@ import br.com.consultas.pojos.Consulta;
  * @author bibianafonso@gmail.com
  * 
  */
+
+@SuppressWarnings("unused")
 public class ConsultaDAO {
 
-	private static final String selectAll = "select * from consulta";
+	private static final String selectForDate = "select * from consulta where data_consulta::date = ?"; //order by data_consulta
 	private static final String selectConsultaCode = "select * from consulta where cod = ?";
 	private static final String insertConsulta = "insert into consulta(cod_paciente, data_consulta) values (?, ?)";
 
-	/*
-	 * 
-	 * create table consulta( cod SERIAL PRIMARY KEY, cod_paciente INTEGER
-	 * REFERENCES Paciente(cod), data_consulta timestamp with time zone DEFAULT
-	 * now() )
-	 */
+
 
 	/**
 	 * Metodo responsavel por buscar todos registros da tabela consulta.
 	 * 
 	 * @return lista de consultas.
 	 */
-	public List<Consulta> buscar() {
+	public List<Consulta> buscar(Date data) {
+		Date date = data;
 		ArrayList<Consulta> consultaLista = new ArrayList<Consulta>();
 		Consulta consulta = null;
 		PreparedStatement stmt = null;
@@ -58,7 +56,10 @@ public class ConsultaDAO {
 
 			con = DriverManager.getConnection(url, properties);
 
-			stmt = con.prepareStatement(selectAll);
+			stmt = con.prepareStatement(selectForDate);
+	
+			
+			stmt.setDate(1, (java.sql.Date) date);
 			rs = stmt.executeQuery();
 			while (rs.next()) {
 				int cod = rs.getInt("cod");
@@ -169,9 +170,7 @@ public class ConsultaDAO {
 
 			stmt = con.prepareStatement(insertConsulta);
 			stmt.setInt(1, consulta.getCodPaciente());
-			stmt.setTimestamp(2, new Timestamp(consulta.getDataConsulta()
-					.getTime()));
-			// stmt.setTimestamp(3, consulta.getHora());
+			stmt.setTimestamp(2, new Timestamp(consulta.getDataConsulta().getTime()));
 			int r = stmt.executeUpdate();
 
 			if (r != 1) {
@@ -203,10 +202,10 @@ public class ConsultaDAO {
 	}
 
 	public static void main(String[] args) {
-		ConsultaDAO consultaDAO = new ConsultaDAO();
+		/*ConsultaDAO consultaDAO = new ConsultaDAO();
 		List<Consulta> consultas = consultaDAO.buscar(); // retorna todos
 		System.out.println("Inicio - Buscar();");
-		// DateFormat df = new SimpleDateFormat("h:mm a");
+		 DateFormat df = new SimpleDateFormat("h:mm a");
 		for (Consulta consulta : consultas) {
 			
 		}
@@ -233,7 +232,7 @@ public class ConsultaDAO {
 		// Consulta
 		Consulta novaConsulta = new Consulta(1, 2, date);
 		consultaDAO.inserir(novaConsulta);
-
+	*/
 	}
 
 }
