@@ -1,14 +1,18 @@
 package swing;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
 import javax.swing.table.DefaultTableModel;
 
 import Action.ConsultaAction;
 import Action.LimpaGridAction;
 import Action.VerificarConsultaAction;
+
+/**
+ * Tela de Consultas
+ * @author Bibiana
+ *
+ */
 
 public class ConsultaGUI extends JPanel {
 
@@ -23,21 +27,19 @@ public class ConsultaGUI extends JPanel {
 	private JButton limpaBtn;
 
 	public ConsultaGUI() {
-		
+				
 		horaText = new JTextField(5);
 		horaLbl = new JLabel("Data/hora:");
 		pacienteLbl = new JLabel("Cod Paciente:");
-		pacienteText = new JTextField(5);
-
+		pacienteText = new JTextField(5);	
 		
-		//GRID PARA CONSULTA DE DATAS
-		String[] columns = { "Paciente", "Data" };
-
+		//Scroll da grid
 		JScrollPane pane = new JScrollPane();
 		pane.setBounds(100, 110, 300, 163);
 		pane.setBorder(BorderFactory.createLineBorder(Color.green, 4));
 		this.add(pane);
 		
+		//Grid
 		DefaultTableModel model = new DefaultTableModel();
 		JTable table = new JTable(model);
 		
@@ -72,7 +74,8 @@ public class ConsultaGUI extends JPanel {
 		add(pacienteLbl);
 		add(pacienteText);
 		add(limpaBtn);
-
+		
+		//SETA TAMANHO DOS ELEMENTOS
 		horaText.setBounds(110, 55, 150, 20);
 		horaLbl.setBounds(20, 55, 90, 20);
 		limpaBtn.setBounds(200, 285, 101, 25);
@@ -86,12 +89,11 @@ public class ConsultaGUI extends JPanel {
 	public static void main(String[] args) {
 
 		JFrame frame = new JFrame("Consultas");
-		frame.setLayout(new GridLayout());
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().add(new ConsultaGUI());
 		frame.pack();
-		frame.setSize(650, 400);
 		frame.setVisible(true);
+		
 	}
 
 }

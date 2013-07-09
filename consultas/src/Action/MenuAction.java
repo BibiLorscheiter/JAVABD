@@ -3,10 +3,16 @@ package Action;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import swing.ConsultaGUI;
-
+/**
+ * Action responsável pelas opções do menu
+ * chamada na PrincipalGUI
+ * @author Bibiana
+ *
+ */
 //action da tela inicial
 @SuppressWarnings("serial")
 public class MenuAction extends AbstractAction {
@@ -20,6 +26,7 @@ public class MenuAction extends AbstractAction {
 			frame.getContentPane().add(new ConsultaGUI());
 			frame.pack();
 			frame.setVisible(true);
+			frame.setIconImage(new ImageIcon("imagem/consulta.png").getImage());
 
 		} else if (opcao.equalsIgnoreCase("Sair")) {
 			System.exit(0);

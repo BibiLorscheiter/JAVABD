@@ -15,7 +15,12 @@ import javax.swing.table.DefaultTableModel;
 import br.com.consultas.dao.ConsultaDAO;
 import br.com.consultas.pojos.Consulta;
 
-// action do botão de verificar consultas já cadastradas
+/**
+ * Action chamada no ConsultaGUI
+ * responsável por buscar as consultas já cadastradas
+ * @author Bibiana
+ *
+ */
 @SuppressWarnings("serial")
 public class VerificarConsultaAction extends AbstractAction {
 
@@ -42,20 +47,11 @@ public class VerificarConsultaAction extends AbstractAction {
 		return date;
 	}
 
-	@SuppressWarnings("unused")
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		ConsultaDAO p = new ConsultaDAO();
 
-		String strDate = data.getText(); // insert nova data
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date date = null;
-		try {
-			date = new Date(sdf.parse(strDate).getTime());
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		// chama metodo que converte Jtextfield e busca no array de consultas
 		// pela data inserida

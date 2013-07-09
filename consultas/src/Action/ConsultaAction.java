@@ -16,7 +16,11 @@ import br.com.consultas.pojos.Consulta;
 import br.com.consultas.pojos.Paciente;
 
 import swing.ConsultaGUI;
-
+/**
+ * Action responsável por inserir uma consulta nova no banco
+ * @author Bibiana
+ *
+ */
 @SuppressWarnings({ "unused", "serial" })
 public class ConsultaAction extends AbstractAction {
 
@@ -33,8 +37,6 @@ public class ConsultaAction extends AbstractAction {
 		int c = Integer.parseInt(codigo.getText());
 		ConsultaDAO p = new ConsultaDAO();
 		
-		
-		
 		String strDate = data.getText(); // insert nova data
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = null;
@@ -44,8 +46,6 @@ public class ConsultaAction extends AbstractAction {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-
 
 		Consulta novaConsulta = new Consulta(1, c, date);
 

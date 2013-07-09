@@ -10,19 +10,18 @@ import javax.swing.JPanel;
 import Action.MenuAction;
 
 /**
- * Classe de tela de marcação de consultas chamada pela
- * PrincipalGui (menu inicial)
+ * Tela do menu principal
  * @author bibianafonso@gmail.com
  *
  */
 //class de interface do menu inicial
 @SuppressWarnings("serial")
 public class PrincipalGUI extends JPanel {
-
+	
 	public PrincipalGUI() {
 		JFrame frame = new JFrame();
 		
-		//ITENS DO MENU
+		//ITENS DO MENU E ACTIONS SENDO CHAMADAS
 		JMenuItem cadastro = new JMenuItem("Marcar consulta");
 		cadastro.addActionListener(new MenuAction());
 		JMenuItem sair = new JMenuItem("Sair");
@@ -32,8 +31,7 @@ public class PrincipalGUI extends JPanel {
 		JMenu menu = new JMenu("Menu");
 		menu.add(cadastro);
 		menu.add(sair);
-		add(menu);
-
+		
 		//ADICIONA MENU A BARRA
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.add(menu);

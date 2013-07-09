@@ -30,7 +30,7 @@ import br.com.consultas.pojos.Consulta;
 @SuppressWarnings("unused")
 public class ConsultaDAO {
 
-	private static final String selectForDate = "select * from consulta where data_consulta::date = ?"; //order by data_consulta
+	private static final String selectForDate = "select * from consulta where data_consulta::date = ?"; 
 	private static final String selectConsultaCode = "select * from consulta where cod = ?";
 	private static final String insertConsulta = "insert into consulta(cod_paciente, data_consulta) values (?, ?)";
 

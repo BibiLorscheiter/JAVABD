@@ -6,6 +6,11 @@ import javax.swing.AbstractAction;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * Action responsável por limpar a grid de consulta
+ * @author Bibiana
+ *
+ */
 @SuppressWarnings("serial")
 public class LimpaGridAction extends AbstractAction {
 
@@ -21,7 +26,9 @@ public class LimpaGridAction extends AbstractAction {
 		DefaultTableModel dm = (DefaultTableModel) table.getModel();
 		while (dm.getRowCount() != 0) {
 			dm.removeRow(0);
+			
+			
 		}
-
+		
 	}
 }
