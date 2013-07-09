@@ -26,8 +26,7 @@ public class LimpaGridAction extends AbstractAction {
 		DefaultTableModel dm = (DefaultTableModel) table.getModel();
 		while (dm.getRowCount() != 0) {
 			dm.removeRow(0);
-			
-			
+				
 		}
 		
 	}
