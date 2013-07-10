@@ -18,9 +18,9 @@ import Action.SobreAction;
  */
 //class de interface do menu inicial
 @SuppressWarnings("serial")
-public class PrincipalGUI extends JPanel {
+public class PrincipalGUI  {
 	
-	public PrincipalGUI() {
+	private static void createGUI() {
 		JFrame frame = new JFrame();
 		
 		//ITENS DO MENU E ACTIONS SENDO CHAMADAS
@@ -28,7 +28,7 @@ public class PrincipalGUI extends JPanel {
 		cadastro.addActionListener(new MenuAction());
 		JMenuItem sair = new JMenuItem("Sair");
 		sair.addActionListener(new MenuAction());
-		JMenuItem sobre = new JMenuItem("Sobre");
+		JMenuItem sobre = new JMenuItem("Ajuda");
 		sobre.addActionListener(new SobreAction());
 	
 		
@@ -52,9 +52,14 @@ public class PrincipalGUI extends JPanel {
 		frame.setVisible(true);
 		frame.setIconImage(new ImageIcon("imagem/consulta.png").getImage());
 	}
+	
 
 	public static void main(String[] s) {
-		new PrincipalGUI();
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				createGUI();
+			}
+		});
 	}
 
 }
